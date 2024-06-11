@@ -1,5 +1,5 @@
-from youtube_transcript_api import YouTubeTranscriptApi as yta
-import streamlit as st
+from youtube_transcript_api import YouTubeTranscriptApi as yta # type: ignore
+import streamlit as st # type: ignore
 import re
 import os
 
@@ -12,9 +12,10 @@ def main():
     link5 = st.text_input('Enter link 5')
 
     if st.button('Generate'):
-        store_videos_transcript(link1, link2, link3, link4, link5)
+        L = [link1, link2, link3, link4, link5]
+        store_videos_transcript(L)
 
-def store_videos_transcript(*links):
+def store_videos_transcript(links):
     pattern = re.compile(r'(?<=v=)[\w-]+')
     for link in links:
         match = pattern.search(link)
@@ -32,6 +33,6 @@ def store_videos_transcript(*links):
                 st.error(f"Failed to retrieve transcript for video {v_value}: {str(e)}")
         else:
             st.error(f"No YouTube video ID found in {link}")
-
+            
 if __name__ == "__main__":
     main()
